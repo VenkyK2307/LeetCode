@@ -1,10 +1,11 @@
-with seperated_table as (
+with cte as (
 
-    select * , sum(weight) over (order by turn) as total_weight
-    from queue
+select * , sum(weight) over (order by turn) as total_weight from queue
+
 )
 
-select person_name from seperated_table 
+
+select person_name from cte
 where total_weight <= 1000
 order by turn desc
 limit 1
