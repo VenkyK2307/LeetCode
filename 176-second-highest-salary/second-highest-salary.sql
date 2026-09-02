@@ -1,2 +1,10 @@
-select max(salary) as SecondHighestSalary from employee 
-where salary < (select max(salary) from employee)
+WITH CTE AS(
+    SELECT * , 
+    DENSE_RANK() OVER (ORDER BY SALARY DESC) AS RANKING
+    FROM EMPLOYEE
+)
+
+SELECT (SELECT SALARY FROM CTE 
+WHERE RANKING = 2
+LIMIT 1 
+) AS SecondHighestSalary 
